@@ -1,11 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-
+from selenium.webdriver.common.proxy import Proxy, ProxyType
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.core.os_manager import ChromeType
-
 from selenium.common.exceptions import WebDriverException, NoSuchDriverException
-
 import time
 import requests
 import os
@@ -35,6 +33,12 @@ try:
 except:
     ALLOW_DEBUG = False
 
+# Proxy settings
+PROXY_HOST = os.getenv('PROXY_HOST')
+PROXY_PORT = os.getenv('PROXY_PORT')
+PROXY_USERNAME = os.getenv('PROXY_USERNAME')  # If your proxy requires authentication
+PROXY_PASSWORD = os.getenv('PROXY_PASSWORD')  # If your proxy requires authentication
+
 # are they set?
 if USER == '' or PASSW == '':
     print('Please set GRASS_USER and GRASS_PASS env variables')
@@ -58,7 +62,6 @@ def download_extension(extension_id):
         print('Extension MD5: ' + md5)
 
 
-
 def generate_error_report(driver):
     if ALLOW_DEBUG == False:
         return
@@ -77,17 +80,34 @@ def generate_error_report(driver):
     print(response.text)
     print('Error report generated! Provide the above information to the developer for debugging purposes.')
 
+
 print('Downloading extension...')
 download_extension(extensionId)
 print('Downloaded! Installing extension and driver manager...')
 
-options = webdriver.ChromeOptions()
-#options.binary_location = '/usr/bin/chromium-browser'
-options.add_argument("--headless=new")
-options.add_argument("--disable-dev-shm-usage")
-options.add_argument('--no-sandbox')
+# Set up proxy if provided
+if PROXY_HOST and PROXY_PORT:
+    proxy = Proxy()
+    proxy.proxy_type = ProxyType.MANUAL
+    proxy.http_proxy = f"{PROXY_HOST}:{PROXY_PORT}"
+    proxy.ssl_proxy = f"{PROXY_HOST}:{PROXY_PORT}"
+    
+    # Check if proxy authentication is required
+    if PROXY_USERNAME and PROXY_PASSWORD:
+        proxy.proxy_auth = (PROXY_USERNAME, PROXY_PASSWORD)
 
-options.add_extension('grass.crx')
+    # Add the proxy to ChromeOptions
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless=new")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument('--no-sandbox')
+
+    proxy.add_to_capabilities(options.to_capabilities())
+else:
+    proxy = None
+
+if proxy:
+    options.add_extension('grass.crx')
 
 print('Installed! Starting...')
 try:
@@ -102,7 +122,6 @@ except (WebDriverException, NoSuchDriverException) as e:
         print('Could not start with manual path! Exiting...')
         exit()
 
-#driver.get('chrome-extension://'+extensionId+'/index.html')
 print('Started! Logging in...')
 driver.get('https://app.getgrass.io/')
 
