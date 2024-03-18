@@ -11,18 +11,31 @@ Grass allows you to earn passive income by sharing your network bandwidth
 3. Set envriomental variables to their respective values: GRASS_USER and GRASS_PASS
 4. You're good to go! Once started, the docker exposes your current network status and lifetime earnings on port 80
 
-### Docker Run Command
+### Docker Run Command 
+#### Using Proxy without authentication
 ```
-docker run -d \
-    --name Grass \
-    -p 8080:80 \
+docker run -d --name Grass -p 8080:80 \
     -e GRASS_USER=myuser@mail.com \
     -e GRASS_PASS=mypass \
     -e ALLOW_DEBUG=False \
-    camislav/grass
+    -e PROXY_HOST=your_proxy_host \
+    -e PROXY_PORT=your_proxy_port \
+camislav/grass
+```
+#### Using Proxy with authentication
+```
+docker run -d --name Grass -p 8080:80 \
+    -e GRASS_USER=myuser@mail.com \
+    -e GRASS_PASS=mypass \
+    -e ALLOW_DEBUG=False \
+    -e PROXY_HOST=your_proxy_host \
+    -e PROXY_PORT=your_proxy_port \
+    -e PROXY_USERNAME=your_proxy_username \
+    -e PROXY_PASSWORD=your_proxy_password \
+camislav/grass
 ```
 
-Please replace 8080 with the port you want to be able to access the status with, as well as GRASS_USER and GRASS_PASS
+Please replace 8080 with the port you want to be able to access the status with, as well as GRASS_USER, GRASS_PASS, PROXY_HOST, PROXY_PORT, PROXY_USERNAME and PROXY_PASSWORD
 
 ## License
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
