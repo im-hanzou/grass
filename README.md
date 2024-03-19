@@ -8,7 +8,7 @@ Grass allows you to earn passive income by sharing your network bandwidth
 ## How to get started?
 1. Register a Grass Account if you don't have one already: [getgrass.io](https://app.getgrass.io/register/?referralCode=PnmuSjrqxyxvZsk)
 2. Either build this image from source, or download it from Docker Hub
-3. Set envriomental variables to their respective values: GRASS_USER and GRASS_PASS
+3. Set envriomental variables to their respective values: GRASS_USER and GRASS_PASS. If use proxy add: PROXY_HOST, PROXY_PORT (PROXY_USERNAME and PROXY_PASSWORD for auth proxies)
 4. You're good to go! Once started, the docker exposes your current network status and lifetime earnings on port 80
 
 ### Docker Run Command 
