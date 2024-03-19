@@ -1,5 +1,5 @@
 # Grass
-An unofficial Docker Image for [getgrass.io](https://app.getgrass.io/register/?referralCode=VqlevN7hfQLGGiQ)
+An unofficial Docker Image for [getgrass.io](https://app.getgrass.io/register/?referralCode=PnmuSjrqxyxvZsk)
 Available on [Docker Hub](https://hub.docker.com/r/camislav/grass)
 
 ## What's Grass?
