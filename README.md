@@ -1,6 +1,6 @@
 # Grass
 An unofficial Docker Image for [getgrass.io](https://app.getgrass.io/register/?referralCode=PnmuSjrqxyxvZsk)
-Available on [Docker Hub](https://hub.docker.com/r/camislav/grass)
+Available on [Docker Hub](https://hub.docker.com/r/ihanzou/grass-proxy)
 
 ## What's Grass?
 Grass allows you to earn passive income by sharing your network bandwidth
@@ -20,7 +20,7 @@ docker run -d \
     -e GRASS_USER=myuser@mail.com \
     -e GRASS_PASS=mypass \
     -e ALLOW_DEBUG=False \
-    camislav/grass
+    ihanzou/grass-proxy
 ```
 #### Using Proxy without authentication
 ```
@@ -30,7 +30,7 @@ docker run -d --name Grass -p 8080:80 \
     -e ALLOW_DEBUG=False \
     -e PROXY_HOST=your_proxy_host \
     -e PROXY_PORT=your_proxy_port \
-    camislav/grass
+    ihanzou/grass-proxy
 ```
 #### Using Proxy with authentication
 ```
@@ -42,7 +42,7 @@ docker run -d --name Grass -p 8080:80 \
     -e PROXY_PORT=your_proxy_port \
     -e PROXY_USERNAME=your_proxy_username \
     -e PROXY_PASSWORD=your_proxy_password \
-    camislav/grass
+    ihanzou/grass-proxy
 ```
 
 Please replace 8080 with the port you want to be able to access the status with, as well as GRASS_USER, GRASS_PASS, PROXY_HOST, PROXY_PORT, PROXY_USERNAME and PROXY_PASSWORD
